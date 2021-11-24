@@ -1,29 +1,45 @@
-import { render } from "react-dom";
 import { Component } from "react";
-
-
-class Countercomponent extends Component{
+import CardComponent from "./Card.js";
+class CounterComponent extends Component{
     constructor(props){
         super(props);
         this.state={
-            initialValue : 5
+            initialValue : 7,
+            toggle:true,
+            
         }
     }
-    count =0;
-    handleIncrement = () =>{
-        this.setState({initialValue : this.state.initialValue +1})
-        this.count++;
+    componentDidMount(){
+        console.log("countercomponent mounting phase");
     }
-    render(){
-        return(
-            <>
-            <h3>{this.props.ComponentName} Component</h3>
-            <h4>Initial Value:{this.state.initialValue} </h4>
-            <button onClick={this.handleIncrement}>Increment</button> &nbsp;
-            <button onClick={()=>{this.setState({initialValue:this.state.initialValue -1});this.count--;}}>Decrement</button> &nbsp;
-            <button onClick={()=>{this.setState({initialValue:this.state.initialValue-this.count});this.count=0}}>Reset</button>       </>
-    );
-
+    componentDidUpdate(){
+        console.log("counter component update phase");
+    }
+    count=0;
+ togglefunctionality = () =>{
+    this.setState({toggle:(!this.state.toggle)})
+    console.log(this.state.toggle);
+}
+handleIncrement = () =>{
+    this.setState({initialValue : this.state.initialValue +1})
+    this.count++;
+}
+render(){
+      return(
+        <>
+        <div className="App">
+        <CardComponent heading="Counter Card Component" Subheadings="Counter component" description="This is Counter Card Component" togglefun={this.togglefunctionality}/>
+        {this.state.toggle ? 
+        <>
+        <h3>{this.props.ComponentName} Component</h3>
+        <h4>Initial Value:{this.state.initialValue} </h4>
+        <button onClick={this.handleIncrement}>Increment</button> &nbsp;
+           <button onClick={()=>{this.setState({initialValue:this.state.initialValue -1});this.count--;}}>Decrement</button> &nbsp;
+           <button onClick={()=>{this.setState({initialValue:this.state.initialValue-this.count});this.count=0}}>Reset</button> 
+        </> :<></>}  
+        </div>       
+        </>
+    )
 }
 }
-export default Countercomponent;
+export default CounterComponent;
